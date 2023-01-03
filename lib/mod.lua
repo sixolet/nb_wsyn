@@ -198,6 +198,7 @@ function player:delayed_active()
             local prm = params:lookup_param(p)
             prm:bang()
     end
+    _menu.rebuild_params()
 end
 
 function player:inactive()
@@ -205,6 +206,8 @@ function player:inactive()
     if self.active_routine ~= nil then
         clock.cancel(self.active_routine)
     end
+    params:hide("nb_w/syn")
+    _menu.rebuild_params()
 end
 
 function player:stop_all()
