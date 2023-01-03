@@ -196,9 +196,6 @@ function player:add_params()
           end
       end
     }
-
-    
-
     params:hide("nb_w/syn")
 end
 
