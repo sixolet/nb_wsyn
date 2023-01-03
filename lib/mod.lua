@@ -158,10 +158,9 @@ function player:add_params()
 
     params:add{
         type = "trigger",
-        id = "nb_w/pluckylogger",
-        name = "pluckylogger >>>",
+        id = "nb_w/randomize",
+        name = "randomize >>>",
         action = function()
-            params:set("nb_w/style", WSYN_PLUCK)
             params:set("nb_w/curve", math.random(-40, 40)/10)
             params:set("nb_w/ramp", math.random(-5, 5)/10)
             params:set("nb_w/fm_index", math.random(-50, 50)/10)
