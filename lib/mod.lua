@@ -77,7 +77,7 @@ local WSYN_SUSTAIN_STEAL = 1
 local WSYN_PLUCK = 2
 
 function player:add_params()
-    params:add_group("nb_w/syn", "w/syn", 9)
+    params:add_group("nb_w/syn", "w/syn", 11)
 
     params:add_option("nb_w/style", "style", { "dynamic poly", "pluck" }, 1)
     params:set_action("nb_w/style", function(param)
@@ -155,6 +155,50 @@ function player:add_params()
         end
         crow.ii.wsyn.lpg_symmetry(param)
     end)
+
+    params:add{
+        type = "trigger",
+        id = "nb_w/pluckylogger",
+        name = "pluckylogger >>>",
+        action = function()
+            params:set("nb_w/style", WSYN_PLUCK)
+            params:set("nb_w/curve", math.random(-40, 40)/10)
+            params:set("nb_w/ramp", math.random(-5, 5)/10)
+            params:set("nb_w/fm_index", math.random(-50, 50)/10)
+            params:set("nb_w/fm_env", math.random(-50, 40)/10)
+            params:set("nb_w/fm_num", math.random(1, 4))
+            params:set("nb_w/fm_denom", math.random(1, 4))
+            params:set("nb_w/lpg_time", math.random(-28, -5)/10)
+            params:set("nb_w/lpg_symmetry", math.random(-50, -30)/10)
+        end
+    }
+    
+    params:add{
+        type = "trigger",
+        id = "nb_w/reset",
+        name = "reset >>>",
+        action = function()
+          for _, p in ipairs({
+              "nb_w/style", 
+              "nb_w/ramp", 
+              "nb_w/fm_index", 
+              "nb_w/curve",
+              "nb_w/fm_env",
+              "nb_w/fm_num",
+              "nb_w/fm_denom",
+              "nb_w/lpg_time",
+              "nb_w/lpg_symmetry"}) do
+                  local prm = params:lookup_param(p)
+                  if (prm.controlspec) then
+                      prm:set(prm.controlspec.default)
+                  elseif (prm.default) then
+                      prm:set(prm.default)
+                  end  
+          end
+      end
+    }
+
+    
 
     params:hide("nb_w/syn")
 end
